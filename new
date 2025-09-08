@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MGT - Advanced Amorphous Powder Solutions</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #0f172a;
+            background: white;
+            scroll-behavior: smooth;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #1e3a8a;
+            border-radius: 4px;
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .logo-url {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        .nav {
+            display: none;
+            align-items: center;
+            gap: 32px;
+        }
+        
+        @media (min-width: 768px) {
+            .nav {
+                display: flex;
+            }
+        }
+        
+        .nav a {
+            text-decoration: none;
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav a:hover {
+            color: #1e3a8a;
+        }
+        
+        .header-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #1e3a8a;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1e40af;
+        }
+        
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #1e3a8a;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+        
+        .badge {
+            background: #1e3a8a;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 100%);
+            padding: 80px 0;
+        }
+        
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            line-height: 1.1;
+            margin: 24px 0;
+            color: #1e3a8a;
+        }
+        
+        @media (min-width: 1024px) {
+            .hero h1 {
+                font-size: 64px;
+            }
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #64748b;
+            max-width: 600px;
+        }
+        
+        /* Section */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-gray {
+            background: #f8fafc;
+        }
+        
+        .section-header {
+            margin-bottom: 48px;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1e3a8a;
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+        
+        .section-divider {
+            width: 80px;
+            height: 4px;
+            background: #1e3a8a;
+            border: none;
+        }
+        
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 24px;
+        }
+        
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+        
+        .grid-3 {
+            grid-template-columns: 1fr;
+        }
+        
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Card */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1e3a8a;
+        }
+        
+        .card p {
+            color: #64748b;
+            line-height: 1.5;
+        }
+        
+        /* Chart */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 16px 0;
+        }
+        
+        .chart-description {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.4;
+            margin-top: 16px;
+        }
+        
+        /* Products */
+        .product-description {
+            margin-top: 32px;
+        }
+        
+        .product-description p {
+            margin-bottom: 12px;
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .product-description strong {
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+        
+        /* Positioning */
+        .positioning-list {
+            margin-top: 24px;
+        }
+        
+        .positioning-list p {
+            margin-bottom: 8px;
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        /* Contact */
+        .contact-info {
+            margin-bottom: 16px;
+        }
+        
+        .contact-info div {
+            margin-bottom: 12px;
+            color: #64748b;
+        }
+        
+        .download-section {
+            margin-bottom: 16px;
+        }
+        
+        .download-section p {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 8px;
+        }
+        
+        /* Footer */
+        footer {
+            border-top: 1px solid #e2e8f0;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        /* Scroll target offset */
+        .scroll-target {
+            scroll-margin-top: 96px;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 767px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .section-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">MGT</span>
+                    <span class="logo-url">mgt-p.com</span>
+                </div>
+                <nav class="nav">
+                    <a href="#about">About</a>
+                    <a href="#products">Products</a>
+                    <a href="#performance">Performance</a>
+                    <a href="#cases">Cases</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+                <div class="header-buttons">
+                    <span class="badge">통신</span>
+                    <a href="#contact" class="btn btn-primary">📞 Contact</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div>
+                <span class="chip">🛡️ Corrosion</span>
+                <span class="chip">⚙️ Wear</span>
+                <span class="chip">📊 EMI</span>
+                <span class="chip">🔗 Eco</span>
+            </div>
+            <h1>Advanced<br>Amorphous<br>Powder Solutions</h1>
+            <p>철계 비정질 분말을 통해 용사·도료·EMI·조선/플랜트 산업에서 새로운 수명주기 성능을 제안합니다.</p>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section section-gray scroll-target">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About MGT</h2>
+                <p class="section-subtitle">혁신적 소재로 산업 수명을 두 배로.</p>
+                <hr class="section-divider">
+            </div>
+            
+            <p style="margin-bottom: 32px; color: #64748b; max-width: 800px;">
+                MGT는 독자적 합금 설계와 가스 아토마이징 분말 제조 기술을 기반으로, 내식·내마모·EMI 솔루션을 제공합니다. 조성은 비공개 정책을 준수합니다.
+            </p>
+            
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>Mission</h3>
+                    <p>산업 설비의 기대수명과 신뢰성을 향상시키는 비정질 분말 솔루션 제공.</p>
+                </div>
+                <div class="card">
+                    <h3>Differentiation</h3>
+                    <p>비정질 미세조직 기반의 내식/내마모/EMI 동시 최적화, 기존 WC-Co·CrC·Ferrite 대비 LCC 절감.</p>
+                </div>
+                <div class="card">
+                    <h3>Industries</h3>
+                    <p>용사/도료, 조선·플랜트, 전자파 흡수/차폐, 발전·화학 프로세스.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="section scroll-target">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Products</h2>
+                <p class="section-subtitle">Series & Variants</p>
+                <hr class="section-divider">
+            </div>
+            
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>MGT#402</h3>
+                    <p>EMI Absorption</p>
+                </div>
+                <div class="card">
+                    <h3>MGT#502</h3>
+                    <p>Corrosion Resistance</p>
+                </div>
+                <div class="card">
+                    <h3>MGT#602</h3>
+                    <p>Wear+Corrosion</p>
+                </div>
+                <div class="card">
+                    <h3>AST#1-MR</h3>
+                    <p>Economic Solution</p>
+                </div>
+            </div>
+            
+            <div class="product-description">
+                <p><strong>MGT#402</strong> — 광대역 RL 타깃(8/14 GHz 피크), Ferrite/Carbon 대체 지향, EMI 코팅/잉크.</p>
+                <p><strong>MGT#502</strong> — 고염소(Cl⁻) 환경 내식 특화, 해양·보일러·플랜트 프라이머 적용.</p>
+                <p><strong>MGT#602</strong> — 마모+부식 동시 대응, WC-Co/CrC 대비 유지보수 주기 연장.</p>
+                <p><strong>AST#1-MR</strong> — 비용 최적형, 부품 대량 보수·프라이머 대체 용도.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance -->
+    <section id="performance" class="section section-gray scroll-target">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Performance Snapshot</h2>
+                <p class="section-subtitle">단순화된 시각 자료 (정량 데이터는 요청 시 제공)</p>
+                <hr class="section-divider">
+            </div>
+            
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>Corrosion (B117)</h3>
+                    <div class="chart-container">
+                        <canvas id="corrosionChart"></canvas>
+                    </div>
+                    <p class="chart-description">
+                        1000 h 염수분무 (개념치, 예시용): MGT#502 = 0.8 mpy, NiCrBSi = 1.2, Inconel = 1.1 → 
+                        <strong>NiCrBSi 대비 약 33%↓, Inconel 대비 약 27%↓</strong>. 
+                        <em>Conceptual values, illustrative only.</em>
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3>Wear (G65)</h3>
+                    <div class="chart-container">
+                        <canvas id="wearChart"></canvas>
+                    </div>
+                    <p class="chart-description">
+                        절삭마모(Proc. A, 개념치): MGT#602 = 60 mm³, WC-Co = 80, CrC-NiCr = 75 → 
+                        <strong>WC-Co 대비 25%↓, CrC 대비 20%↓</strong>. 
+                        <em>Conceptual values, illustrative only.</em>
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3>EMI (RL)</h3>
+                    <div class="chart-container">
+                        <canvas id="emiChart"></canvas>
+                    </div>
+                    <p class="chart-description">
+                        2–18 GHz (개념치): <strong>MGT#402 최소 RL ≈ -30 dB @10 GHz</strong>, 
+                        8/14 GHz 부근 피크 설계. <em>Conceptual values, illustrative only.</em>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Positioning -->
+    <section class="section scroll-target">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Market Positioning</h2>
+                <p class="section-subtitle">가격 vs 성능 포지셔닝 (개념도)</p>
+                <hr class="section-divider">
+            </div>
+            
+            <div class="card">
+                <div class="chart-container" style="height: 400px;">
+                    <canvas id="positioningChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="positioning-list">
+                <p>▶ WC-Co/CrC 대체 지향</p>
+                <p>▶ Zn-rich Primer / Ferrite 대체 지향</p>
+                <p>▶ LCC 20–40% 절감 목표</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section id="cases" class="section section-gray scroll-target">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Case Studies</h2>
+                <p class="section-subtitle">해양·플랜트·EMI 적용 사례</p>
+                <hr class="section-divider">
+            </div>
+            
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>Marine</h3>
+                    <div class="chart-container">
+                        <canvas id="marineChart"></canvas>
+                    </div>
+                    <p class="chart-description">
+                        B117 1000 h 기준, <strong>부식율 약 60% 감소</strong> (개념치).
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3>Plant</h3>
+                    <div class="chart-container">
+                        <canvas id="plantChart"></canvas>
+                    </div>
+                    <p class="chart-description">
+                        G65 기준, <strong>마모량 약 50% 감소</strong>로 유지보수 주기 연장.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h3>EMI</h3>
+                    <div class="chart-container">
+                        <canvas id="emiCaseChart"></canvas>
+                    </div>
+                    <p class="chart-description">
+                        10–14 GHz 구간에서 <strong>RL 개선 폭 ≥ 20 dB</strong> (개념치).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section scroll-target">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contact & Download</h2>
+                <p class="section-subtitle">문의 주시면 산업별 표준 사양·시험 데이터 요약 제공</p>
+                <hr class="section-divider">
+            </div>
+            
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>Contact</h3>
+                    <div class="contact-info">
+                        <div>📧 sales@mgt-p.com</div>
+                        <div>📞 +82-00-0000-0000</div>
+                    </div>
+                    <a href="mailto:sales@mgt-p.com" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        📧 Email us
+                    </a>
+                </div>
+                
+                <div class="card">
+                    <h3>Download Center</h3>
+                    
+                    <div class="download-section">
+                        <a href="#" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-bottom: 8px;">
+                            📥 Catalog (PDF)
+                        </a>
+                        <p>제품 라인업 요약, 적용 산업, 기본 성능 지표.</p>
+                    </div>
+                    
+                    <div class="download-section">
+                        <a href="#" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-bottom: 8px;">
+                            📄 Product Brochure
+                        </a>
+                        <p>시리즈별 장점/경쟁재 비교, 적용 가이드(개념).</p>
+                    </div>
+                    
+                    <div class="download-section">
+                        <a href="#" class="btn btn-secondary" style="width: 100%; justify-content: center; margin-bottom: 8px;">
+                            📊 Data Sheet (Summary)
+                        </a>
+                        <p>시험 프로토콜, 단순화된 수치, 라벨/해석 가이드.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            © 2025 MGT — mgt-p.com · All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Chart defaults
+        if (typeof Chart !== 'undefined') {
+            Chart.defaults.font.family = 'system-ui';
+            Chart.defaults.font.size = 11;
+            Chart.defaults.responsive = true;
+            Chart.defaults.maintainAspectRatio = false;
+
+            // Corrosion Chart
+            new Chart(document.getElementById('corrosionChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['MGT#502', 'NiCrBSi', 'Inconel'],
+                    datasets: [{
+                        data: [0.8, 1.2, 1.1],
+                        backgroundColor: ['#1e3a8a', '#3b82f6', '#60a5fa']
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            beginAtZero: true,
+                            max: 1.4,
+                            ticks: { stepSize: 0.3 }
+                        }
+                    }
+                }
+            });
+
+            // Wear Chart
+            new Chart(document.getElementById('wearChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['MGT#602', 'WC-Co', 'CrC-NiCr'],
+                    datasets: [{
+                        data: [60, 80, 75],
+                        backgroundColor: ['#16a34a', '#22c55e', '#4ade80']
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { stepSize: 20 }
+                        }
+                    }
+                }
+            });
+
+            // EMI Chart
+            new Chart(document.getElementById('emiChart'), {
+                type: 'line',
+                data: {
+                    labels: [2, 6, 10, 14, 18],
+                    datasets: [{
+                        label: 'MGT402',
+                        data: [-8, -18, -30, -28, -15],
+                        borderColor: '#1e3a8a',
+                        backgroundColor: '#1e3a8a',
+                        fill: false,
+                        tension: 0.3
+                    }, {
+                        label: 'Ferrite',
+                        data: [-3, -5, -6, -7, -5],
+                        borderColor: '#ef4444',
+                        backgroundColor: '#ef4444',
+                        fill: false,
+                        tension: 0.3
+                    }, {
+                        label: 'Carbon',
+                        data: [-4, -6, -6, -6, -5],
+                        borderColor: '#6b7280',
+                        backgroundColor: '#6b7280',
+                        fill: false,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: { title: { display: true, text: 'GHz' } },
+                        y: { 
+                            title: { display: true, text: 'RL (dB)' },
+                            min: -35,
+                            max: 0
+                        }
+                    }
+                }
+            });
+
+            // Positioning Scatter Chart
+            new Chart(document.getElementById('positioningChart'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Competitors',
+                        data: [
+                            {x: 2, y: 3, label: 'WC-Co'},
+                            {x: 3, y: 4, label: 'CrC'},
+                            {x: 4, y: 2, label: 'Ferrite/Zn'}
+                        ],
+                        backgroundColor: '#9ca3af',
+                        pointRadius: 6
+                    }, {
+                        label: 'MGT Products',
+                        data: [
+                            {x: 4.5, y: 4.5, label: 'MGT#402'},
+                            {x: 4.7, y: 4.6, label: 'MGT#502'},
+                            {x: 4.8, y: 4.7, label: 'MGT#602'}
+                        ],
+                        backgroundColor: '#1e3a8a',
+                        pointRadius: 8
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: { 
+                            title: { display: true, text: 'Cost →' },
+                            min: 1,
+                            max: 5
+                        },
+                        y: { 
+                            title: { display: true, text: 'Performance →' },
+                            min: 1,
+                            max: 5
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw.label || '';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Marine Case Chart
+            new Chart(document.getElementById('marineChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Before', 'After'],
+                    datasets: [{
+                        data: [1.6, 0.6],
+                        backgroundColor: ['#6b7280', '#1e3a8a']
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            beginAtZero: true,
+                            max: 2
+                        }
+                    }
+                }
+            });
+
+            // Plant Case Chart
+            new Chart(document.getElementById('plantChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Before', 'After'],
+                    datasets: [{
+                        data: [120, 60],
+                        backgroundColor: ['#6b7280', '#16a34a']
+                    }]
+                },
+                options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            beginAtZero: true,
+                            max: 150
+                        }
+                    }
+                }
+            });
+
+            // EMI Case Chart
+            new Chart(document.getElementById('emiCaseChart'), {
+                type: 'line',
+                data: {
+                    labels: [10, 14],
+                    datasets: [{
+                        label: 'Before',
+                        data: [-6, -8],
+                        borderColor: '#9ca3af',
+                        backgroundColor: '#9ca3af',
+                        fill: false,
+                        tension: 0.1
+                    }, {
+                        label: 'After',
+                        data: [-30, -28],
+                        borderColor: '#1e3a8a',
+                        backgroundColor: '#1e3a8a',
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: { title: { display: true, text: 'GHz' } },
+                        y: { 
+                            title: { display: true, text: 'RL (dB)' },
+                            min: -35,
+                            max: 0
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
